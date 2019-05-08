@@ -16,6 +16,7 @@ public class FeedbackViewController: UITableViewController {
     public var configuration:                 FeedbackConfiguration {
         didSet { updateDataSource(configuration: configuration) }
     }
+    public var rightBarButtonTitle: String?
 
     internal var wireframe: FeedbackWireframeProtocol!
 
@@ -40,10 +41,12 @@ public class FeedbackViewController: UITableViewController {
             { self.feedbackEditingService.update(attachmentMedia: .none) } : .none
     }
 
-    public init(configuration: FeedbackConfiguration) {
+    public init(configuration: FeedbackConfiguration, senderTitle: String? = nil) {
         self.configuration = configuration
 
         super.init(style: .grouped)
+        
+        self.rightBarButtonTitle = senderTitle
 
         wireframe = FeedbackWireframe(viewController: self,
                                       transitioningDelegate: self,
@@ -64,8 +67,9 @@ public class FeedbackViewController: UITableViewController {
         updateDataSource(configuration: configuration)
 
         title = CTLocalizedString("CTFeedback.Feedback")
+        let buttonTitle = rightBarButtonTitle ?? CTLocalizedString("CTFeedback.Mail")
         navigationItem
-            .rightBarButtonItem = UIBarButtonItem(title: CTLocalizedString("CTFeedback.Mail"),
+            .rightBarButtonItem = UIBarButtonItem(title: buttonTitle,
                                                   style: .plain,
                                                   target: self,
                                                   action: #selector(mailButtonTapped(_:)))

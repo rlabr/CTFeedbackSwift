@@ -70,12 +70,7 @@ extension FeedbackWireframe: FeedbackWireframeProtocol {
                 UIAlertAction(title: CTLocalizedString("CTFeedback.PhotoLibrary"),
                               style: .default) { _ in self.showImagePicker(sourceType: .photoLibrary) })
         }
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            alertController.addAction(
-                UIAlertAction(title: CTLocalizedString("CTFeedback.Camera"),
-                              style: .default) { _ in self.showImagePicker(sourceType: .camera) })
-        }
-
+        
         if let delete = deleteAction {
             alertController.addAction(
                 UIAlertAction(title: CTLocalizedString("CTFeedback.Delete"),
